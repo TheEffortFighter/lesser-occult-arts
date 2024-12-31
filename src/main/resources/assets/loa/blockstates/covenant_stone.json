@@ -1,7 +1,7 @@
 {
   "variants": {
-    "": {
-      "model": "loa:block/covenant_stone"
-    }
+    "part=base": { "model": "loa:block/covenant_stone_base" },
+    "part=middle": { "model": "loa:block/covenant_stone_middle" },
+    "part=top": { "model": "loa:block/covenant_stone_top" }
   }
 }
