@@ -1,0 +1,7 @@
+{
+	"parent": "block/cube_all",
+	"texture_size": [16, 16],
+	"textures": {
+		"all": "loa:block/covenant_stone_middle"
+	}
+}
