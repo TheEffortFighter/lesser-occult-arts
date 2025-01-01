@@ -1,6 +1,7 @@
 package net.theeffortfighter.lesseroccultarts.item;
 
 import net.minecraft.item.Item;
+import net.minecraft.tag.ItemTags;
 import net.minecraft.tag.TagKey;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;

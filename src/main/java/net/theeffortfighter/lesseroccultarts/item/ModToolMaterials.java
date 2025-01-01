@@ -9,7 +9,7 @@ import java.util.function.Supplier;
 
 public enum ModToolMaterials implements ToolMaterial {
     LOA(0, 10000, 0.0F, 0.0F, 0, () -> {
-        return Ingredient.fromTag(ModItemTags.LOA);
+        return null;
     }),;
 
     private final int miningLevel;
@@ -17,15 +17,15 @@ public enum ModToolMaterials implements ToolMaterial {
     private final float miningSpeed;
     private final float attackDamage;
     private final int enchantability;
-    private final Lazy<Ingredient> repairIngredient;
+    private final Supplier<Ingredient> repairIngredient;
 
-    private ModToolMaterials(int miningLevel, int itemDurability, float miningSpeed, float attackDamage, int enchantability, Supplier repairIngredient) {
+    private ModToolMaterials(int miningLevel, int itemDurability, float miningSpeed, float attackDamage, int enchantability, Supplier<Ingredient> repairIngredient) {
         this.miningLevel = miningLevel;
         this.itemDurability = itemDurability;
         this.miningSpeed = miningSpeed;
         this.attackDamage = attackDamage;
         this.enchantability = enchantability;
-        this.repairIngredient = new Lazy(repairIngredient);
+        this.repairIngredient = repairIngredient;
     }
 
     @Override
