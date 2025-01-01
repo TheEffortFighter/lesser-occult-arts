@@ -1,6 +1,22 @@
 {
-	"parent": "block/cube_all",
 	"textures": {
-		"all": "loa:block/covenant_stone_top"
-	}
+		"1": "loa:block/deepslate/bottom",
+		"3": "loa:block/deepslate/top",
+		"4": "loa:block/deepslate/topside",
+		"particle": "loa:block/deepslate/bottomside"
+	},
+	"elements": [
+		{
+			"from": [0, 0, 0],
+			"to": [16, 16, 16],
+			"faces": {
+				"north": {"uv": [0, 0, 16, 16], "texture": "#4"},
+				"east": {"uv": [0, 0, 16, 16], "texture": "#4"},
+				"south": {"uv": [0, 0, 16, 16], "texture": "#4"},
+				"west": {"uv": [0, 0, 16, 16], "texture": "#4"},
+				"up": {"uv": [0, 0, 16, 16], "texture": "#3"},
+				"down": {"uv": [0, 0, 16, 16], "texture": "#1"}
+			}
+		}
+	]
 }

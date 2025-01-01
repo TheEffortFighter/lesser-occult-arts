@@ -12,11 +12,13 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 import net.theeffortfighter.lesseroccultarts.LesserOccultArts;
 import net.theeffortfighter.lesseroccultarts.block.custom.CovenantStone;
+import net.theeffortfighter.lesseroccultarts.item.ModItemGroup;
 
 
 public class ModBlocks {
 
-    public static final Block COVENANT_STONE = registerBlock("covenant_stone", new CovenantStone(FabricBlockSettings.of(Material.STONE).collidable(true)), ItemGroup.MISC);
+    public static final Block COVENANT_STONE = registerBlock("covenant_stone", new CovenantStone(FabricBlockSettings.of(Material.STONE).collidable(true)), ModItemGroup.LESSER_OCCULT_ARTS);
+    public static final Block INDIGO_COVENANT_STONE = registerBlock("indigo_covenant_stone", new CovenantStone(FabricBlockSettings.of(Material.STONE).collidable(true)), ModItemGroup.LESSER_OCCULT_ARTS);
 
     private static Block registerBlock(String name, Block block, ItemGroup tab) {
         registerBlockItem(name, block, tab);

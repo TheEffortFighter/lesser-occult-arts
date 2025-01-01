@@ -15,5 +15,6 @@ public class LesserOccultArts implements ModInitializer {
 
 		ModBlocks.registerModBlocks();
 		ModItems.registerModItems();
+
 	}
 }

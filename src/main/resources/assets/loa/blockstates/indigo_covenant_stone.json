@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "part=base": { "model": "loa:block/indigo_covenant_stone_base" },
+    "part=middle": { "model": "loa:block/indigo_covenant_stone_middle" },
+    "part=top": { "model": "loa:block/indigo_covenant_stone_top" }
+  }
+}

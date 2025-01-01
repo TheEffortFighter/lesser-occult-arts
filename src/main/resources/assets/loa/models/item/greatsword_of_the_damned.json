@@ -1,6 +1,28 @@
 {
-  "parent": "item/generated",
+  "parent": "item/handheld",
   "textures": {
     "layer0": "loa:item/greatsword_of_the_damned"
+  },
+  "display": {
+    "thirdperson_righthand": {
+      "rotation": [0, -90, 50],
+      "translation": [0, 13, 0],
+      "scale": [2, 2, 2]
+    },
+    "thirdperson_lefthand": {
+      "rotation": [0, 90, 50],
+      "translation": [0, 13, 0],
+      "scale": [2, 2, 2]
+    },
+    "firstperson_righthand": {
+      "rotation": [0, 100, 60],
+      "translation": [0, 6, 0],
+      "scale": [1.2, 1.2, 1.2]
+    },
+    "firstperson-lefthand": {
+      "rotation": [0, -100, 60],
+      "translation": [0, 6, 0],
+      "scale": [1.2, 1.2, 1.2]
+    }
   }
 }
