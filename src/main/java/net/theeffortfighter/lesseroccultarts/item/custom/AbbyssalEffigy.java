@@ -13,7 +13,7 @@ public class AbbyssalEffigy extends Item {
 
     public AbbyssalEffigy(Settings settings, int seconds, int repairAmount) {
         super(settings);
-        this.repairInterval = seconds * 20;
+        this.repairInterval = seconds * 40;
         this.repairAmount = repairAmount;
         this.repairTick = 0;
     }
