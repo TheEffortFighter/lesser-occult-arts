@@ -4,9 +4,12 @@
   "package": "net.theeffortfighter.lesseroccultarts.mixin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
+    "EntityMixin",
+    "LivingEntityMixin"
   ],
   "client": [
-    "ExampleMixin"
+    "EntityMixin",
+    "LivingEntityMixin"
   ],
   "injectors": {
     "defaultRequire": 1

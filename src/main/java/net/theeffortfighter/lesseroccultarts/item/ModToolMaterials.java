@@ -2,24 +2,22 @@ package net.theeffortfighter.lesseroccultarts.item;
 
 import net.minecraft.item.ToolMaterial;
 import net.minecraft.recipe.Ingredient;
-import net.minecraft.tag.ItemTags;
-import net.minecraft.util.Lazy;
 
 import java.util.function.Supplier;
 
 public enum ModToolMaterials implements ToolMaterial {
-    LOA(0, 10000, 0.0F, 0.0F, 0, () -> {
+    LOA(0, Integer.MAX_VALUE, 0.0F, 0.0F, 0, () -> {
         return null;
     }),;
 
     private final int miningLevel;
-    private final int itemDurability;
+    private final Integer itemDurability;
     private final float miningSpeed;
     private final float attackDamage;
     private final int enchantability;
     private final Supplier<Ingredient> repairIngredient;
 
-    private ModToolMaterials(int miningLevel, int itemDurability, float miningSpeed, float attackDamage, int enchantability, Supplier<Ingredient> repairIngredient) {
+    private ModToolMaterials(int miningLevel, Integer itemDurability, float miningSpeed, float attackDamage, int enchantability, Supplier<Ingredient> repairIngredient) {
         this.miningLevel = miningLevel;
         this.itemDurability = itemDurability;
         this.miningSpeed = miningSpeed;
