@@ -2,6 +2,7 @@ package net.theeffortfighter.lesseroccultarts;
 
 import net.fabricmc.api.ModInitializer;
 import net.theeffortfighter.lesseroccultarts.block.ModBlocks;
+import net.theeffortfighter.lesseroccultarts.entity.ModBlockEntities;
 import net.theeffortfighter.lesseroccultarts.item.ModItems;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,6 +16,7 @@ public class LesserOccultArts implements ModInitializer {
 
 		ModBlocks.registerModBlocks();
 		ModItems.registerModItems();
+		ModBlockEntities.registerBlockEntities();
 
 	}
 }

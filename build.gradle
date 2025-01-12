@@ -11,6 +11,19 @@ repositories {
 		name = 'ParchmentMC'
 		url = 'https://maven.parchmentmc.org'
 	}
+	maven {
+		name = 'GeckoLib'
+		url 'https://dl.cloudsmith.io/public/geckolib3/geckolib/maven/'
+		content {
+			includeGroupByRegex("software\\.bernie.*")
+			includeGroup("com.eliotlash.mclib")
+		}
+	}
+	maven {
+		name "KosmX's maven"
+		url 'https://maven.kosmx.dev/'
+	}
+
 }
 
 dependencies {
@@ -21,6 +34,9 @@ dependencies {
 		parchment("org.parchmentmc.data:parchment-1.19.2:2022.11.27@zip")
 	}
 	modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
+	modImplementation("software.bernie.geckolib:geckolib-fabric-1.19:${geckolib_version}")
+	implementation("com.eliotlash.mclib:mclib:20")
+	include modImplementation("dev.kosmx.player-anim:player-animation-lib-fabric:${player_anim}")
 
 
 	// Fabric API. This is technically optional, but you probably want it anyway.

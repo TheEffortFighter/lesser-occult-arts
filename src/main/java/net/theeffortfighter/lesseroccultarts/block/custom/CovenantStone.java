@@ -1,7 +1,9 @@
 package net.theeffortfighter.lesseroccultarts.block.custom;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockEntityProvider;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.enums.BlockHalf;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -12,14 +14,23 @@ import net.minecraft.state.property.EnumProperty;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.theeffortfighter.lesseroccultarts.block.ModBlockPart;
+import net.theeffortfighter.lesseroccultarts.entity.CovenantStoneBlockEntity;
+import org.jetbrains.annotations.Nullable;
 
-public class CovenantStone extends Block {
+import java.util.UUID;
+
+public class CovenantStone extends Block implements BlockEntityProvider {
 
     public static final EnumProperty<ModBlockPart> PART = EnumProperty.of("part", ModBlockPart.class);
 
     public CovenantStone(Settings settings) {
         super(settings);
         this.setDefaultState(this.stateManager.getDefaultState().with(PART, ModBlockPart.BASE));
+    }
+
+    @Override
+    public BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
+        return new CovenantStoneBlockEntity(pos, state);
     }
 
     @Override
@@ -40,9 +51,18 @@ public class CovenantStone extends Block {
         return this.getDefaultState();
     }
 
+
     @Override
     public void onPlaced(World world, BlockPos pos, BlockState state, LivingEntity placer, ItemStack itemStack) {
         super.onPlaced(world, pos, state, placer, itemStack);
+
+        if (!world.isClient && placer instanceof PlayerEntity player) {
+            BlockEntity blockEntity = world.getBlockEntity(pos);
+            if (blockEntity instanceof CovenantStoneBlockEntity covenantStoneBlockEntity) {
+                covenantStoneBlockEntity.setOwner(player.getUuid());
+                System.out.println("Covenant Owner UUID: " + player.getUuid());
+            }
+        }
 
         // Place the middle and top parts
         world.setBlockState(pos.up(), this.getDefaultState().with(PART, ModBlockPart.MIDDLE));
@@ -52,6 +72,12 @@ public class CovenantStone extends Block {
     @Override
     public void onBreak(World world, BlockPos pos, BlockState state, PlayerEntity player) {
         super.onBreak(world, pos, state, player);
+
+        BlockEntity blockEntity = world.getBlockEntity(pos);
+        if (blockEntity instanceof CovenantStoneBlockEntity covenantStoneBlockEntity) {
+            System.out.println("Breaking CovenantStone owned by: " + covenantStoneBlockEntity.getOwner());
+        }
+
 
         BlockPos basePos = pos;
         ModBlockPart part = state.get(PART);
