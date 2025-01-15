@@ -9,7 +9,7 @@ import net.theeffortfighter.lesseroccultarts.item.custom.*;
 
 public class ModItems {
 
-    public static final Item GOTD = registerItem("greatsword_of_the_damned", new UnbreakableItem(10, 1, new FabricItemSettings().maxCount(1).group(ModItemGroup.LESSER_OCCULT_ARTS)));
+    public static final Item GOTD = registerItem("greatsword_of_the_damned", new UnbreakableItem(10, -3, new FabricItemSettings().maxCount(1).group(ModItemGroup.LESSER_OCCULT_ARTS)));
     public static final Item DAGGER = registerItem("covenant_dagger", new CovenantDagger(new FabricItemSettings().maxCount(1).group(ModItemGroup.LESSER_OCCULT_ARTS)));
     public static final Item AMULET = registerItem("amulet_of_uncursing", new UncursingAmulet(new FabricItemSettings().maxCount(1).group(ModItemGroup.LESSER_OCCULT_ARTS)));
     public static final Item EFFIGY = registerItem("abyssal_effigy", new AbbyssalEffigy(new FabricItemSettings().maxCount(1).maxDamage(600).group(ModItemGroup.LESSER_OCCULT_ARTS), 1, 1));

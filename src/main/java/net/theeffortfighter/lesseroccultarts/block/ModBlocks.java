@@ -17,7 +17,7 @@ import net.theeffortfighter.lesseroccultarts.item.ModItemGroup;
 
 public class ModBlocks {
 
-    public static final Block COVENANT_STONE = registerBlock("covenant_stone", new CovenantStone(FabricBlockSettings.of(Material.STONE).collidable(true)), ModItemGroup.LESSER_OCCULT_ARTS);
+    public static final Block COVENANT_STONE = registerBlock("covenant_stone", new CovenantStone(FabricBlockSettings.of(Material.STONE).collidable(true).strength(20000,20000)), ModItemGroup.LESSER_OCCULT_ARTS);
     public static final Block INDIGO_COVENANT_STONE = registerBlock("indigo_covenant_stone", new CovenantStone(FabricBlockSettings.of(Material.STONE).collidable(true)), ModItemGroup.LESSER_OCCULT_ARTS);
 
     private static Block registerBlock(String name, Block block, ItemGroup tab) {
