@@ -6,11 +6,11 @@
   "mixins": [
     "EntityMixin",
     "LivingEntityMixin",
-    "PlayerAnimationMixin",
     "PlayerEntityMixin"
   ],
   "client": [
     "ClientPlayerEntityMixin",
+    "PlayerAnimationMixin",
     "EntityMixin",
     "LivingEntityMixin"
   ],

@@ -35,6 +35,6 @@ public class ClientPlayerEntityMixin implements PlayerAnimation {
 
     @Override
     public ModifierLayer<IAnimation> LOA_getModAnimation() {
-        return modAnimationContainer ;
+        return modAnimationContainer;
     }
 }

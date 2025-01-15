@@ -5,7 +5,7 @@
 			"loop": "hold_on_last_frame",
 			"animation_length": 1.5,
 			"bones": {
-				"Head": {
+				"head": {
 					"rotation": {
 						"0.375": {
 							"pre": [0, 0, 0],
@@ -41,7 +41,7 @@
 						}
 					}
 				},
-				"Body": {
+				"torso": {
 					"rotation": {
 						"0.375": {
 							"pre": [0, 0, 0],
@@ -69,7 +69,7 @@
 						}
 					}
 				},
-				"RightArm": {
+				"right_arm": {
 					"rotation": {
 						"0.375": {
 							"pre": [0, 0, 0],
@@ -97,7 +97,7 @@
 						}
 					}
 				},
-				"LeftArm": {
+				"left_arm": {
 					"rotation": {
 						"0.375": {
 							"pre": [0, 0, 0],
@@ -125,7 +125,7 @@
 						}
 					}
 				},
-				"RightLeg": {
+				"right_leg": {
 					"position": {
 						"0.7083": {
 							"pre": [0, 0, 0],
@@ -138,7 +138,7 @@
 						}
 					}
 				},
-				"LeftLeg": {
+				"left_leg": {
 					"rotation": {
 						"0.4583": {
 							"pre": [0, 0, 0],
