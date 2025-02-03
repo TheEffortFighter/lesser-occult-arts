@@ -1,0 +1,85 @@
+{
+	"format_version": "1.12.0",
+	"minecraft:geometry": [
+		{
+			"description": {
+				"identifier": "geometry.unknown",
+				"texture_width": 64,
+				"texture_height": 64,
+				"visible_bounds_width": 4,
+				"visible_bounds_height": 2.5,
+				"visible_bounds_offset": [0, 0.75, 0]
+			},
+			"bones": [
+				{
+					"name": "body",
+					"pivot": [0, 6, 0],
+					"cubes": [
+						{"origin": [-4, 0, -3], "size": [8, 12, 5], "uv": [0, 15]},
+						{"origin": [-4, 5, -3], "size": [8, 0, 5], "uv": [-5, 41]}
+					]
+				},
+				{
+					"name": "leftarm",
+					"parent": "body",
+					"pivot": [-4, 10, 0],
+					"cubes": [
+						{"origin": [-7, -2, -2], "size": [3, 14, 4], "inflate": 0.01, "uv": [26, 15]},
+						{"origin": [-7, -2, 2], "size": [3, 5, 4], "uv": [0, 32]},
+						{"origin": [-7, -7, -1], "size": [3, 5, 0], "uv": [36, 33]},
+						{"origin": [-7, -7, 1], "size": [3, 5, 0], "uv": [36, 33]}
+					]
+				},
+				{
+					"name": "rightarm",
+					"parent": "body",
+					"pivot": [4, 10, 0],
+					"cubes": [
+						{"origin": [4, -2, -2], "size": [3, 14, 4], "inflate": 0.01, "uv": [26, 15], "mirror": true},
+						{"origin": [4, -2, 2], "size": [3, 5, 4], "uv": [0, 32], "mirror": true},
+						{"origin": [4, -7, -1], "size": [3, 5, 0], "uv": [36, 33], "mirror": true},
+						{"origin": [4, -7, 1], "size": [3, 5, 0], "uv": [36, 33], "mirror": true}
+					]
+				},
+				{
+					"name": "head",
+					"parent": "body",
+					"pivot": [0, 12, 0],
+					"cubes": [
+						{"origin": [-4, 12, -4], "size": [8, 7, 8], "uv": [0, 0]}
+					]
+				},
+				{
+					"name": "lefthorn",
+					"parent": "head",
+					"pivot": [-4, 16, -1],
+					"rotation": [0, 0, 0],
+					"cubes": [
+						{"origin": [-6, 16, -2], "size": [2, 2, 2], "uv": [22, 33]},
+						{"origin": [-8, 16, -2], "size": [2, 6, 2], "uv": [14, 32]},
+						{"origin": [-10, 15, -1], "size": [6, 8, 0], "uv": [32, 6]}
+					]
+				},
+				{
+					"name": "righthorn",
+					"parent": "head",
+					"pivot": [4, 16.5, -1],
+					"rotation": [0, 0, 0],
+					"cubes": [
+						{"origin": [3.5941, 15.52008, -1.64645], "size": [2, 2, 2], "uv": [22, 33], "mirror": true},
+						{"origin": [5.5941, 15.52008, -1.64645], "size": [2, 6, 2], "uv": [14, 32], "mirror": true},
+						{"origin": [3.5941, 14.52008, -0.64645], "size": [6, 8, 0], "uv": [32, 6], "mirror": true}
+					]
+				},
+				{
+					"name": "eyes",
+					"parent": "head",
+					"pivot": [0, 16, -4],
+					"cubes": [
+						{"origin": [-4, 13, -4], "size": [8, 6, 0], "inflate": 0.01, "uv": [32, 0]}
+					]
+				}
+			]
+		}
+	]
+}

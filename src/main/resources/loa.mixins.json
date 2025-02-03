@@ -10,7 +10,6 @@
   ],
   "client": [
     "ClientPlayerEntityMixin",
-    "PlayerAnimationMixin",
     "EntityMixin",
     "LivingEntityMixin"
   ],

@@ -8,6 +8,7 @@ import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.hit.BlockHitResult;
 import net.theeffortfighter.lesseroccultarts.item.custom.AbbyssalEffigy;
+import net.theeffortfighter.lesseroccultarts.item.custom.MonarchSeal;
 import net.theeffortfighter.lesseroccultarts.item.custom.UncursingAmulet;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -39,5 +40,7 @@ public abstract class PlayerEntityMixin {
             AbbyssalEffigy item = (AbbyssalEffigy) offhandStack.getItem();
             item.onTick(player, offhandStack);  // Call the repair method
         }
+
+
     }
 }
