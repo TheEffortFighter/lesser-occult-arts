@@ -12,6 +12,7 @@ import net.minecraft.item.ItemUsageContext;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
+import net.minecraft.util.Util;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.theeffortfighter.lesseroccultarts.block.custom.CovenantStone;
@@ -46,15 +47,14 @@ public class CovenantDagger extends Item {
                 if (blockEntity instanceof CovenantStoneBlockEntity covenantStoneBlockEntity) {
                     UUID owner = covenantStoneBlockEntity.getOwner();
 
-                    if (owner == null) {
-                        System.out.println("Covenant owner is null. Assigning current player as owner.");
-                        covenantStoneBlockEntity.setOwner(player.getUuid());
+                    if (player.getUuid().equals(owner)) {
                         ownerEffect(player);
-                    } else if (player.getUuid().equals(owner)) {
-                        System.out.println("You are the covenant owner: " + player.getUuid());
-                        ownerEffect(player);
-                    } else {
-                        System.out.println("You are NOT the covenant owner: " + player.getUuid());
+                        if (hasPlayerUsedDagger(player) && !player.getUuid().equals(owner)) {
+                            slowPlayer(player);
+                        }
+                    }
+                    else if (!player.getUuid().equals(owner)) {
+                        System.out.println("You are not the covenant owner: " + player.getUuid());
                         slowPlayer(player);
                     }
                 }
@@ -74,7 +74,7 @@ public class CovenantDagger extends Item {
      */
     private void slowPlayer(LivingEntity entity) {
         // Add slowness for 100 ticks (5 seconds) with an amplifier of 0
-        entity.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOWNESS, 100, 0));
+        entity.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOWNESS, 100, 255));
     }
 
     private void ownerEffect(LivingEntity entity) {

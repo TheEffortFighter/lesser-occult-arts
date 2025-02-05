@@ -73,11 +73,6 @@ public class CovenantStone extends Block implements BlockEntityProvider {
     public void onBreak(World world, BlockPos pos, BlockState state, PlayerEntity player) {
         super.onBreak(world, pos, state, player);
 
-        BlockEntity blockEntity = world.getBlockEntity(pos);
-        if (blockEntity instanceof CovenantStoneBlockEntity covenantStoneBlockEntity) {
-            System.out.println("Breaking CovenantStone owned by: " + covenantStoneBlockEntity.getOwner());
-        }
-
 
         BlockPos basePos = pos;
         ModBlockPart part = state.get(PART);

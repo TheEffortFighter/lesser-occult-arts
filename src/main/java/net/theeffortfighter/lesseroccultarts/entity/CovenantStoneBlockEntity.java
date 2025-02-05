@@ -3,12 +3,13 @@ package net.theeffortfighter.lesseroccultarts.entity;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.util.Util;
 import net.minecraft.util.math.BlockPos;
 
 import java.util.UUID;
 
 public class CovenantStoneBlockEntity extends BlockEntity {
-    private UUID owner;
+    private UUID owner = Util.NIL_UUID;
 
     public CovenantStoneBlockEntity(BlockPos pos, BlockState state) {
         super(ModBlockEntities.COVENANT_STONE, pos, state);
@@ -16,6 +17,7 @@ public class CovenantStoneBlockEntity extends BlockEntity {
 
     public void setOwner(UUID owner) {
         this.owner = owner;
+        this.markDirty();
     }
 
     public UUID getOwner() {
