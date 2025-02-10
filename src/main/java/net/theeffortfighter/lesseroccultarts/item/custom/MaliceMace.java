@@ -18,19 +18,17 @@ public class MaliceMace extends Item {
     }
 
     @Override
-    public TypedActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand) {
-        if (!world.isClient() && player instanceof ServerPlayerEntity serverPlayer) {
-            lockCamera(serverPlayer);
+    public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
+        if (!world.isClient && hand == Hand.MAIN_HAND && user instanceof ServerPlayerEntity serverPlayer) {
+            lockCamera(serverPlayer); // Track the player
+            return TypedActionResult.success(user.getStackInHand(hand));
         }
 
-        return TypedActionResult.success(player.getStackInHand(hand));
+        return super.use(world, user, hand);
     }
 
     private void lockCamera(ServerPlayerEntity player) {
-        float yaw = player.getYaw();
-        float pitch = player.getPitch();
-
         // Send packet to lock camera
-        player.networkHandler.sendPacket(new PlayerPositionLookS2CPacket(player.getX(), player.getY(), player.getZ(), yaw, pitch, Set.of(PlayerPositionLookS2CPacket.Flag.X_ROT, PlayerPositionLookS2CPacket.Flag.Y_ROT), 0, true));
+        player.networkHandler.sendPacket(new PlayerPositionLookS2CPacket(player.getX(), player.getY(), player.getZ(), 0.0f, 0.0f, Set.of(PlayerPositionLookS2CPacket.Flag.X, PlayerPositionLookS2CPacket.Flag.Y), 0, false));
     }
 }

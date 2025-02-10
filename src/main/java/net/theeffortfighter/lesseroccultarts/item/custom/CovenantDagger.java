@@ -9,18 +9,18 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUsageContext;
+import net.minecraft.network.packet.s2c.play.PlayerPositionLookS2CPacket;
+import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
-import net.minecraft.util.Util;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.theeffortfighter.lesseroccultarts.block.custom.CovenantStone;
 import net.theeffortfighter.lesseroccultarts.entity.CovenantStoneBlockEntity;
+import net.theeffortfighter.lesseroccultarts.registry.CovenantPlayerRegistry;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 public class CovenantDagger extends Item {
 
@@ -49,9 +49,6 @@ public class CovenantDagger extends Item {
 
                     if (player.getUuid().equals(owner)) {
                         ownerEffect(player);
-                        if (hasPlayerUsedDagger(player) && !player.getUuid().equals(owner)) {
-                            slowPlayer(player);
-                        }
                     }
                     else if (!player.getUuid().equals(owner)) {
                         System.out.println("You are not the covenant owner: " + player.getUuid());
@@ -82,22 +79,15 @@ public class CovenantDagger extends Item {
     }
 
     /**
-     * Tracks the player who used the dagger by storing their UUID.
-     *
-     * @param player The player to track.
-     */
-    private void linkPlayerToDagger(PlayerEntity player) {
-        UUID playerId = player.getUuid();
-        linkedToDagger.put(playerId, true);
-    }
-
-    /**
      * Handles the generic use action when the dagger is right-clicked (not on a block).
      */
     @Override
     public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
         if (!world.isClient && hand == Hand.MAIN_HAND) {
-            linkPlayerToDagger(user); // Track the player
+            UUID uuid = user.getUuid();
+            if (!CovenantPlayerRegistry.getInstance().isPlayerRegistered(uuid)) {
+                CovenantPlayerRegistry.getInstance().addPlayer(uuid);
+            }
             return TypedActionResult.success(user.getStackInHand(hand));
         }
 
@@ -110,7 +100,10 @@ public class CovenantDagger extends Item {
      * @param player The player to check.
      * @return True if the player has used the dagger, otherwise false.
      */
-    public boolean hasPlayerUsedDagger(PlayerEntity player) {
-        return linkedToDagger.getOrDefault(player.getUuid(), false);
+    public void hasPlayerUsedDagger(PlayerEntity player) {
+        UUID uuid = player.getUuid();
+        if (CovenantPlayerRegistry.getInstance().isPlayerRegistered(uuid)); {
+
+        }
     }
 }

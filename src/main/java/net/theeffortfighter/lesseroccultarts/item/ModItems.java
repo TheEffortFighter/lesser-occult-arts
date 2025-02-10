@@ -20,6 +20,7 @@ public class ModItems {
     public static final Item CROWN = registerItem("abyssal_crown", new ModdedArmorItem(5,5,20, EquipmentSlot.HEAD, new FabricItemSettings().maxCount(1).group(ModItemGroup.LESSER_OCCULT_ARTS)));
     public static final Item MACE = registerItem("malice_mace", new UnbreakableItem(8, -2.4F, new FabricItemSettings().maxCount(1).group(ModItemGroup.LESSER_OCCULT_ARTS)));
     public static final Item SEAL = registerItem("monarchs_seal", new MonarchSeal(new FabricItemSettings().maxCount(1).group(ModItemGroup.LESSER_OCCULT_ARTS)));
+    public static final Item CHAIN = registerItem("abyssal_chains", new AbyssalChains(new FabricItemSettings().maxCount(1).group(ModItemGroup.LESSER_OCCULT_ARTS)));
 
     private static Item registerItem(String name, Item item) {
         return Registry.register(Registry.ITEM, new Identifier(LesserOccultArts.MOD_ID, name), item);

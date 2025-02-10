@@ -9,5 +9,5 @@ import net.minecraft.util.registry.Registry;
 import net.theeffortfighter.lesseroccultarts.LesserOccultArts;
 
 public class ModEntities {
-    public static final EntityType<DemonEntity> DEMON = Registry.register(Registry.ENTITY_TYPE, new Identifier(LesserOccultArts.MOD_ID, "demon"), FabricEntityTypeBuilder.create(SpawnGroup.MONSTER, DemonEntity::new).dimensions(EntityDimensions.fixed(0.4f,0.4f)).build());
+    public static final EntityType<DemonEntity> DEMON = Registry.register(Registry.ENTITY_TYPE, new Identifier(LesserOccultArts.MOD_ID, "demon"), FabricEntityTypeBuilder.create(SpawnGroup.MONSTER, DemonEntity::new).dimensions(EntityDimensions.fixed(1.0f,1.2f)).build());
 }
