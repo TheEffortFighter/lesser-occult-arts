@@ -10,6 +10,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUsageContext;
 import net.minecraft.network.packet.s2c.play.PlayerPositionLookS2CPacket;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
@@ -18,6 +19,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.theeffortfighter.lesseroccultarts.block.custom.CovenantStone;
 import net.theeffortfighter.lesseroccultarts.entity.CovenantStoneBlockEntity;
+import net.theeffortfighter.lesseroccultarts.item.utils.PlayerUtils;
 import net.theeffortfighter.lesseroccultarts.registry.CovenantPlayerRegistry;
 
 import java.util.*;
@@ -46,12 +48,25 @@ public class CovenantDagger extends Item {
                 BlockEntity blockEntity = world.getBlockEntity(blockPos);
                 if (blockEntity instanceof CovenantStoneBlockEntity covenantStoneBlockEntity) {
                     UUID owner = covenantStoneBlockEntity.getOwner();
-
                     if (player.getUuid().equals(owner)) {
                         ownerEffect(player);
+
+
+                        Set<UUID> allPlayers = CovenantPlayerRegistry.getInstance().getCovenantPlayers();
+                        MinecraftServer server = player.getServer();
+
+                        if (server != null) {
+                            for (UUID uuid : allPlayers) {
+                                ServerPlayerEntity targetPlayer = server.getPlayerManager().getPlayer(uuid);
+                                if (targetPlayer != null) { // Ensure player is online
+                                    while (true)
+                                    daggerEffect(targetPlayer);
+                                }
+                            }
+                        }
+
                     }
                     else if (!player.getUuid().equals(owner)) {
-                        System.out.println("You are not the covenant owner: " + player.getUuid());
                         slowPlayer(player);
                     }
                 }
@@ -105,5 +120,10 @@ public class CovenantDagger extends Item {
         if (CovenantPlayerRegistry.getInstance().isPlayerRegistered(uuid)); {
 
         }
+    }
+
+    private void daggerEffect(ServerPlayerEntity player) {
+        AbyssalChains.lockCamera(player);
+        slowPlayer(player);
     }
 }

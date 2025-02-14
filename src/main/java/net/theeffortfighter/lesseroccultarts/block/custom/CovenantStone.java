@@ -10,6 +10,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.item.ItemStack;
 import net.minecraft.state.StateManager;
+import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.state.property.EnumProperty;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -22,10 +23,11 @@ import java.util.UUID;
 public class CovenantStone extends Block implements BlockEntityProvider {
 
     public static final EnumProperty<ModBlockPart> PART = EnumProperty.of("part", ModBlockPart.class);
+    public static final BooleanProperty ACTIVE = BooleanProperty.of("active"); // New Property
 
     public CovenantStone(Settings settings) {
         super(settings);
-        this.setDefaultState(this.stateManager.getDefaultState().with(PART, ModBlockPart.BASE));
+        this.setDefaultState(this.stateManager.getDefaultState().with(PART, ModBlockPart.BASE).with(ACTIVE, false)); // Default to inactive);
     }
 
     @Override
@@ -35,7 +37,7 @@ public class CovenantStone extends Block implements BlockEntityProvider {
 
     @Override
     protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
-        builder.add(PART);
+        builder.add(PART, ACTIVE);
     }
 
     @Override
