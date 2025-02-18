@@ -20,7 +20,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.theeffortfighter.lesseroccultarts.block.custom.CovenantStone;
 import net.theeffortfighter.lesseroccultarts.entity.CovenantStoneBlockEntity;
-import net.theeffortfighter.lesseroccultarts.item.utils.PlayerUtils;
 import net.theeffortfighter.lesseroccultarts.registry.CovenantPlayerRegistry;
 
 import java.util.*;

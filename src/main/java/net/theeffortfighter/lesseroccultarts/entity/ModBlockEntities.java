@@ -16,5 +16,8 @@ public class ModBlockEntities {
                 BlockEntityType.Builder.create(CovenantStoneBlockEntity::new, ModBlocks.COVENANT_STONE).build(null)
         );
     }
-}
+
+    public static void initialize() {
+    }
+ }
 

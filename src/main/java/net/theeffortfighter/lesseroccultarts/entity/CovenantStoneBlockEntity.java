@@ -1,6 +1,7 @@
 package net.theeffortfighter.lesseroccultarts.entity;
 
 import net.minecraft.block.BlockState;
+import net.minecraft.block.BlockWithEntity;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.network.ClientConnection;
@@ -15,11 +16,12 @@ import net.minecraft.world.World;
 import net.theeffortfighter.lesseroccultarts.block.custom.CovenantStone;
 import net.theeffortfighter.lesseroccultarts.item.custom.CovenantDagger;
 import net.theeffortfighter.lesseroccultarts.registry.CovenantPlayerRegistry;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Set;
 import java.util.UUID;
 
-public class CovenantStoneBlockEntity extends BlockEntity implements TickablePacketListener {
+public class CovenantStoneBlockEntity extends BlockEntity {
     private UUID owner = Util.NIL_UUID;
     private boolean active = false;
 
@@ -87,19 +89,5 @@ public class CovenantStoneBlockEntity extends BlockEntity implements TickablePac
         }
     }
 
-    @Override
-    public void tick() {
-
-    }
-
-    @Override
-    public void onDisconnected(Text reason) {
-
-    }
-
-    @Override
-    public ClientConnection getConnection() {
-        return null;
-    }
 }
 

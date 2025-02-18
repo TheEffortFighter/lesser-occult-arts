@@ -23,6 +23,7 @@ public class LesserOccultArts implements ModInitializer {
 		ModBlockEntities.registerBlockEntities();
 		GeckoLib.initialize();
 		FabricDefaultAttributeRegistry.register(ModEntities.DEMON, VexEntity.createVexAttributes());
+		ModBlockEntities.initialize();
 
 	}
 }

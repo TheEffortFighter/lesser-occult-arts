@@ -1,9 +1,10 @@
 package net.theeffortfighter.lesseroccultarts.block.custom;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockEntityProvider;
-import net.minecraft.block.BlockState;
+import com.mojang.serialization.MapCodec;
+import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.block.entity.BlockEntityTicker;
+import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.block.enums.BlockHalf;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -17,13 +18,16 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.theeffortfighter.lesseroccultarts.LesserOccultArts;
 import net.theeffortfighter.lesseroccultarts.block.ModBlockPart;
+import net.theeffortfighter.lesseroccultarts.block.ModBlocks;
 import net.theeffortfighter.lesseroccultarts.entity.CovenantStoneBlockEntity;
-import org.jetbrains.annotations.Nullable;
+import net.theeffortfighter.lesseroccultarts.entity.ModBlockEntities;
 
-import java.util.UUID;
+import static net.minecraft.util.registry.RegistryKey.createCodec;
 
-public class CovenantStone extends Block implements BlockEntityProvider {
+
+public class CovenantStone extends BlockWithEntity {
 
     public static final EnumProperty<ModBlockPart> PART = EnumProperty.of("part", ModBlockPart.class);
     public static final BooleanProperty ACTIVE = BooleanProperty.of("active"); // New Property
@@ -41,6 +45,11 @@ public class CovenantStone extends Block implements BlockEntityProvider {
     @Override
     protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
         builder.add(PART, ACTIVE);
+    }
+
+    @Override
+    public BlockRenderType getRenderType(BlockState state) {
+        return BlockRenderType.MODEL;
     }
 
     @Override
@@ -93,6 +102,12 @@ public class CovenantStone extends Block implements BlockEntityProvider {
         world.breakBlock(basePos, false);
         world.breakBlock(basePos.up(), false);
         world.breakBlock(basePos.up(2), false);
+    }
+
+    @Override
+    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type) {
+        // Make sure to check world.isClient if you only want to tick only on serverside.
+        return checkType(type, ModBlockEntities.COVENANT_STONE, CovenantStoneBlockEntity::tick);
     }
 
 }
