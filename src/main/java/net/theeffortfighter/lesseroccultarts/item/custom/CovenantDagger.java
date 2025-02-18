@@ -12,6 +12,7 @@ import net.minecraft.item.ItemUsageContext;
 import net.minecraft.network.packet.s2c.play.PlayerPositionLookS2CPacket;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
@@ -39,39 +40,30 @@ public class CovenantDagger extends Item {
     public ActionResult useOnBlock(ItemUsageContext context) {
         World world = context.getWorld();
         BlockPos blockPos = context.getBlockPos();
-        BlockEntity blockEntity = world.getBlockEntity(blockPos);
+        BlockState blockState = world.getBlockState(blockPos);
 
-        if (!world.isClient && blockEntity instanceof CovenantStoneBlockEntity covenantStone) {
+        if (!world.isClient && blockState.getBlock() instanceof CovenantStone) {
             PlayerEntity player = context.getPlayer();
+
             if (player != null) {
-                UUID owner = covenantStone.getOwner();
+                BlockEntity blockEntity = world.getBlockEntity(blockPos);
+                if (blockEntity instanceof CovenantStoneBlockEntity covenantStoneBlockEntity) {
+                    UUID owner = covenantStoneBlockEntity.getOwner();
 
-                if (player.getUuid().equals(owner)) {
-                    covenantStone.toggleActive();
-                    ownerEffect(player);
+                    if (player.getUuid().equals(owner)) { // ✅ Check if the player is the owner
+                        boolean currentState = covenantStoneBlockEntity.isActive();
+                        covenantStoneBlockEntity.setActive(!currentState); // ✅ Toggle state
+                        ownerEffect(player);
 
-                    Set<UUID> allPlayers = CovenantPlayerRegistry.getInstance().getCovenantPlayers();
-                    MinecraftServer server = player.getServer();
-
-                    if (server != null) {
-                        for (UUID uuid : allPlayers) {
-                            ServerPlayerEntity targetPlayer = server.getPlayerManager().getPlayer(uuid);
-                            if (targetPlayer != null) { // Ensure player is online
-                                BlockPos stonePos = findCovenantStone(targetPlayer);
-                                if (stonePos != null) {
-                                    while (world.getBlockState(stonePos).get(CovenantStone.ACTIVE)) {
-                                        daggerEffect(targetPlayer);
-                                    }
-                                }
-                            }
-                        }
+                        player.sendMessage(Text.of("Covenant Stone is now " + (currentState ? "inactive" : "active")), true);
+                    } else {
+                        slowPlayer(player); // ❌ Not the owner? Apply slowness
                     }
-                    return ActionResult.SUCCESS;
-                } else {
-                    slowPlayer(player);
                 }
             }
+            return ActionResult.SUCCESS;
         }
+
         return ActionResult.PASS;
     }
 
@@ -82,7 +74,7 @@ public class CovenantDagger extends Item {
      *
      * @param entity The entity to apply the effect to.
      */
-    private void slowPlayer(LivingEntity entity) {
+    private static void slowPlayer(LivingEntity entity) {
         // Add slowness for 100 ticks (5 seconds) with an amplifier of 0
         entity.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOWNESS, 100, 255));
     }
@@ -120,7 +112,7 @@ public class CovenantDagger extends Item {
         }
     }
 
-    private void daggerEffect(ServerPlayerEntity player) {
+    public static void daggerEffect(ServerPlayerEntity player) {
         AbyssalChains.lockCamera(player);
         slowPlayer(player);
     }

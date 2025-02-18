@@ -3,11 +3,17 @@ package net.theeffortfighter.lesseroccultarts.entity;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.server.MinecraftServer;
+import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.Util;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 import net.theeffortfighter.lesseroccultarts.block.custom.CovenantStone;
+import net.theeffortfighter.lesseroccultarts.item.custom.CovenantDagger;
+import net.theeffortfighter.lesseroccultarts.registry.CovenantPlayerRegistry;
 
+import java.util.Set;
 import java.util.UUID;
 
 public class CovenantStoneBlockEntity extends BlockEntity {
@@ -29,6 +35,11 @@ public class CovenantStoneBlockEntity extends BlockEntity {
 
     public boolean isActive() {
         return active;
+    }
+
+    public void setActive(boolean state) {
+        this.active = state;
+        this.markDirty(); // Ensure the block entity updates properly
     }
 
     public void toggleActive() {
@@ -56,6 +67,21 @@ public class CovenantStoneBlockEntity extends BlockEntity {
             owner = nbt.getUuid("Owner");
         }
         active = nbt.getBoolean("Active");
+    }
+
+    public static void tick(World world, BlockPos pos, BlockState state, CovenantStoneBlockEntity blockEntity) {
+        if (!world.isClient && blockEntity.isActive()) {
+            MinecraftServer server = world.getServer();
+            if (server == null) return;
+
+            Set<UUID> allPlayers = CovenantPlayerRegistry.getInstance().getCovenantPlayers();
+            for (UUID uuid : allPlayers) {
+                ServerPlayerEntity player = server.getPlayerManager().getPlayer(uuid);
+                if (player != null) { // Ensure player is online
+                    CovenantDagger.daggerEffect(player); // Apply effect from the Abyssal Chains class
+                }
+            }
+        }
     }
 }
 
