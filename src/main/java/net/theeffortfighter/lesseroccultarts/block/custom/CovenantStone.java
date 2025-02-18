@@ -12,6 +12,9 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.state.property.EnumProperty;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.Hand;
+import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.theeffortfighter.lesseroccultarts.block.ModBlockPart;
@@ -50,7 +53,7 @@ public class CovenantStone extends Block implements BlockEntityProvider {
             return null;
         }
 
-        return this.getDefaultState();
+        return this.getDefaultState().with(ACTIVE, false); // Set inactive on placement
     }
 
 
@@ -67,8 +70,8 @@ public class CovenantStone extends Block implements BlockEntityProvider {
         }
 
         // Place the middle and top parts
-        world.setBlockState(pos.up(), this.getDefaultState().with(PART, ModBlockPart.MIDDLE));
-        world.setBlockState(pos.up(2), this.getDefaultState().with(PART, ModBlockPart.TOP));
+        world.setBlockState(pos.up(), this.getDefaultState().with(PART, ModBlockPart.MIDDLE).with(ACTIVE, false));
+        world.setBlockState(pos.up(2), this.getDefaultState().with(PART, ModBlockPart.TOP).with(ACTIVE, false));
     }
 
     @Override

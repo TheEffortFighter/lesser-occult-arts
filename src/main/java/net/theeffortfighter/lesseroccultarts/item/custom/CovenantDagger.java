@@ -39,41 +39,39 @@ public class CovenantDagger extends Item {
     public ActionResult useOnBlock(ItemUsageContext context) {
         World world = context.getWorld();
         BlockPos blockPos = context.getBlockPos();
-        BlockState blockState = world.getBlockState(blockPos);
+        BlockEntity blockEntity = world.getBlockEntity(blockPos);
 
-        if (!world.isClient && blockState.getBlock() instanceof CovenantStone) {
+        if (!world.isClient && blockEntity instanceof CovenantStoneBlockEntity covenantStone) {
             PlayerEntity player = context.getPlayer();
-
             if (player != null) {
-                BlockEntity blockEntity = world.getBlockEntity(blockPos);
-                if (blockEntity instanceof CovenantStoneBlockEntity covenantStoneBlockEntity) {
-                    UUID owner = covenantStoneBlockEntity.getOwner();
-                    if (player.getUuid().equals(owner)) {
-                        ownerEffect(player);
+                UUID owner = covenantStone.getOwner();
 
+                if (player.getUuid().equals(owner)) {
+                    covenantStone.toggleActive();
+                    ownerEffect(player);
 
-                        Set<UUID> allPlayers = CovenantPlayerRegistry.getInstance().getCovenantPlayers();
-                        MinecraftServer server = player.getServer();
+                    Set<UUID> allPlayers = CovenantPlayerRegistry.getInstance().getCovenantPlayers();
+                    MinecraftServer server = player.getServer();
 
-                        if (server != null) {
-                            for (UUID uuid : allPlayers) {
-                                ServerPlayerEntity targetPlayer = server.getPlayerManager().getPlayer(uuid);
-                                if (targetPlayer != null) { // Ensure player is online
-                                    while (true)
-                                    daggerEffect(targetPlayer);
+                    if (server != null) {
+                        for (UUID uuid : allPlayers) {
+                            ServerPlayerEntity targetPlayer = server.getPlayerManager().getPlayer(uuid);
+                            if (targetPlayer != null) { // Ensure player is online
+                                BlockPos stonePos = findCovenantStone(targetPlayer);
+                                if (stonePos != null) {
+                                    while (world.getBlockState(stonePos).get(CovenantStone.ACTIVE)) {
+                                        daggerEffect(targetPlayer);
+                                    }
                                 }
                             }
                         }
-
                     }
-                    else if (!player.getUuid().equals(owner)) {
-                        slowPlayer(player);
-                    }
+                    return ActionResult.SUCCESS;
+                } else {
+                    slowPlayer(player);
                 }
             }
-            return ActionResult.SUCCESS;
         }
-
         return ActionResult.PASS;
     }
 
@@ -125,5 +123,28 @@ public class CovenantDagger extends Item {
     private void daggerEffect(ServerPlayerEntity player) {
         AbyssalChains.lockCamera(player);
         slowPlayer(player);
+    }
+
+    private BlockPos findCovenantStone(ServerPlayerEntity player) {
+        World world = player.getWorld();
+        BlockPos playerPos = player.getBlockPos();
+        int searchRadius = 15; // Adjust as needed
+
+        // Scan within the search radius
+        for (int x = -searchRadius; x <= searchRadius; x++) {
+            for (int y = -searchRadius; y <= searchRadius; y++) {
+                for (int z = -searchRadius; z <= searchRadius; z++) {
+                    BlockPos checkPos = playerPos.add(x, y, z);
+                    BlockState state = world.getBlockState(checkPos);
+
+                    // Check if the block is a Covenant Stone and is active
+                    if (state.getBlock() instanceof CovenantStone && state.get(CovenantStone.ACTIVE)) {
+                        return checkPos;
+                    }
+                }
+            }
+        }
+
+        return null; // No active Covenant Stone found
     }
 }
