@@ -67,8 +67,6 @@ public class CovenantDagger extends Item {
         return ActionResult.PASS;
     }
 
-
-
     /**
      * Applies a slowness effect to the player who used the dagger.
      *
