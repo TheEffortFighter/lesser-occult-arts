@@ -34,7 +34,7 @@ public class MonarchSeal extends Item {
     }
 
     private void summonDemon(World world, PlayerEntity player) {
-        VexEntity demon = new DemonEntity(ModEntities.DEMON, world);
+        DemonEntity demon = new DemonEntity(ModEntities.DEMON, world);
         Vec3d pos = player.getPos().add((world.random.nextDouble() - 0.5) * 2, 1, (world.random.nextDouble() - 0.5) * 2);
 
         demon.refreshPositionAndAngles(pos.x, pos.y, pos.z, world.random.nextFloat() * 360F, 0F);

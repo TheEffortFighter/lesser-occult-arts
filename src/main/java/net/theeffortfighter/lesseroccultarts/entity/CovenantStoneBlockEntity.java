@@ -44,16 +44,7 @@ public class CovenantStoneBlockEntity extends BlockEntity {
 
     public void setActive(boolean state) {
         this.active = state;
-        this.markDirty(); // Ensure the block entity updates properly
-    }
-
-    public void toggleActive() {
-        this.active = !this.active;
-        markDirty();
-        if (world instanceof ServerWorld serverWorld) {
-            BlockState state = world.getBlockState(pos);
-            world.setBlockState(pos, state.with(CovenantStone.ACTIVE, this.active));
-        }
+        markDirty(); // Ensure the block entity updates properly
     }
 
     @Override
@@ -74,6 +65,30 @@ public class CovenantStoneBlockEntity extends BlockEntity {
         active = nbt.getBoolean("Active");
     }
 
+    private BlockPos findCovenantStone(ServerPlayerEntity player) {
+        World world = player.getWorld();
+        BlockPos playerPos = player.getBlockPos();
+        int searchRadius = 15; // Adjust as needed
+
+        // Scan within the search radius
+        for (int x = -searchRadius; x <= searchRadius; x++) {
+            for (int y = -searchRadius; y <= searchRadius; y++) {
+                for (int z = -searchRadius; z <= searchRadius; z++) {
+                    BlockPos checkPos = playerPos.add(x, y, z);
+                    BlockState state = world.getBlockState(checkPos);
+
+                    // Check if the block is a Covenant Stone and is active
+                    if (state.getBlock() instanceof CovenantStone && state.get(CovenantStone.ACTIVE)) {
+                        return checkPos;
+                    }
+                }
+            }
+        }
+
+        return null; // No active Covenant Stone found
+    }
+
+
     public static void tick(World world, BlockPos pos, BlockState state, CovenantStoneBlockEntity blockEntity) {
         if (!world.isClient && blockEntity.isActive()) {
             MinecraftServer server = world.getServer();
@@ -83,11 +98,13 @@ public class CovenantStoneBlockEntity extends BlockEntity {
             for (UUID uuid : allPlayers) {
                 ServerPlayerEntity player = server.getPlayerManager().getPlayer(uuid);
                 if (player != null) { // Ensure player is online
-                    CovenantDagger.daggerEffect(player); // Apply effect from the Abyssal Chains class
+                    BlockPos stonePos = blockEntity.findCovenantStone(player);
+                    if (stonePos != null) { // Only apply effects if the stone exists and is active
+                        CovenantDagger.daggerEffect(player);
+                    }
                 }
             }
         }
     }
-
 }
 
